@@ -1,0 +1,10 @@
+# exemplo de vhost
+<VirtualHost *:80>
+    ServerName donate
+    DocumentRoot /var/www/public/app/pmk/donate/public
+    <Directory /var/www/public/app/pmk/donate/public>
+	AllowOverride All
+	Order allow,deny
+	allow from all
+    </Directory>
+</VirtualHost>
