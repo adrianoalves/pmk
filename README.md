@@ -38,7 +38,9 @@ Para realizar o Teste, usei:
 
 #### Considerações Finais
 
-O Dump do banco está em database/schema/mysql-schema.sql.
+Denominei o projeto de `donate`.
+
+O Dump do banco está em donate/database/schema/mysql-schema.sql.
 
 Obrigado pela oportunidade de Participar!
 
