@@ -1,61 +1,40 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+### Processo Seletivo - Programador PHP
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+#### Sobre o Teste
 
-## About Laravel
+Segui os requisitos da descrição do teste o mais próximo possível do solicitado. Apliquei o conceito de CRUD nas Entidades identificadas e apliquei o máximo possível de conceitos SOLID.
+Variei um pouco no Routing para aplicar tanto a forma simples quanto a forma utilizada para desenvolver APIs Rest.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Porém, em alguns pontos e considerando um cenário de projeto real, eu faria diferente por questões de arquitetura e manutenibilidade.
+Um destes pontos é sobre a forma de Pagamento com tabelas diferentes para cada tipo.
+Atualmente existem várias formas de pagamento que estão em constante evolução, e à medida que o sistema implementa novas formas, ter uma tabela para cada
+uma pode dificultar a evolução do sistema. Hoje em dia, é possível pagar/doar/compensar/trocar com criptomoedas e até com pontos ou milhas de programas de fidelidade.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+No javascript, apesar de usar muito a Fetch API nativa do ES6, neste usei Axios pela ampla adoção e bundle padrão no Laravel.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+#### Stack Utilizada
 
-## Learning Laravel
+Para realizar o Teste, usei:
+- [Laravel 8](https://laravel.com);
+- [Vuejs](https://vuejs.org/);
+- [Vue Router](https://router.vuejs.org/);
+- [Vuelidate](https://vuelidate.js.org/);
+- [Vue Input Mask](https://www.npmjs.com/package/v-mask);
+- [Bootstrap](https://getbootstrap.com).
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+#### Como instalar
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- Leia as instruções de instalação de ambiente [Laravel 8](https://laravel.com/docs/8.x/installation);
+- Certifique-se de possuir o ambiente de desenvovolvimento com [npm instalado](https://www.npmjs.com/get-npm);
+- Clone o projeto `git clone https://github.com/adrianoalves/pmk.git .` ;
+- Crie um banco de dados denominado `donate`;
+- Configure o arquivo .env;
+- acesse a raiz do projeto e execute os seguintes comandos;
+- Execute `composer update`, 
+- Para rodar o front, execute `npm run dev` ou `npm run watch`.
 
-## Laravel Sponsors
+#### Considerações Finais
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+O Dump do banco está em database/schema/mysql-schema.sql.
 
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Obrigado pela oportunidade de Participar!

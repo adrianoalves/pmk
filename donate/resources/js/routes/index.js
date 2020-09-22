@@ -13,12 +13,12 @@ const routes = [
         component: () => import( '../pages/donators/create' )
     },
     {
-        path: '/doadores/editar/{id}',
+        path: '/doadores/editar/:id', name: 'edit',
         component: () => import( '../pages/donators/edit' )
     },
 
     {
-        path: '/doadores',
+        path: '/doadores', name: 'list',
         component: () => import( '../pages/donators/list' )
     },
 

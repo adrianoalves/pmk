@@ -9,7 +9,7 @@ class Debit extends Model
 {
     use HasFactory;
 
-    protected $table = 'payment_method_credit';
+    protected $table = 'payment_method_debit';
 
     protected $guarded = [];
 }

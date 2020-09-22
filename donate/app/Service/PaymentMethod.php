@@ -30,4 +30,19 @@ class PaymentMethod
         }
         return $model;
     }
+
+    /**
+     * Updates user payment method
+     * @param array $data payment data array
+     * @param int $type payment method type
+     * @param int $idUser payment owner user id
+     * @return bool true on success
+     * @throws PaymentMethodNotFoundException
+     */
+    public static function updatePaymentMethod( array $data, $type, int $idUser ): bool
+    {
+        $data['id_user'] = $idUser;
+        $newPaymentMethod = self::resolve( $type )->fill( $data );
+        return $newPaymentMethod->save();
+    }
 }

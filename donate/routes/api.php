@@ -20,3 +20,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::apiResources([
     'donators' => \App\Http\Controllers\Api\DonatorController::class
 ]);
+
+
+Route::get('user-data/get-by-user-id/{id}', [ \App\Http\Controllers\Api\UserDataController::class, 'getByIdUser'] );
+Route::get('payment-method/{type}/get-by-user-id/{id}', [ \App\Http\Controllers\Api\PaymentMethodController::class, 'getByIdUser' ] );
+Route::get('donation/get-by-user-id/{id}', [ \App\Http\Controllers\Api\DonationController::class, 'getByIdUser' ] );

@@ -2,10 +2,10 @@
     <div>
         <div class="row">
             <div class="col text-center">
-                <h5 class="text-info my-2 text-bold">Doador</h5>
+                <h5 class="text-info my-2 text-bold">Editar dados de {{user.name}}</h5>
             </div>
         </div>
-        <form @submit.prevent="post">
+        <form @submit.prevent="update">
             <div class="card">
                 <div class="card-body">
 
@@ -93,6 +93,7 @@
                         </div>
 
                     </div>
+
 
                 </div>
             </div>
@@ -191,7 +192,7 @@
                 <div class="col text-center">
                     <div class="alert alert-danger" role="alert">
                         <h6>Ops!</h6>
-                        Por favor, corrija os erros no form para prosseguir com o Cadastro.
+                        Por favor, corrija os erros no form para prosseguir com a Atualização.
                     </div>
                 </div>
             </div>
@@ -199,7 +200,7 @@
                 <div class="col text-center">
                     <div class="alert alert-success" role="alert">
                         <h6>Ok!</h6>
-                        Novo Doador Cadastrado!
+                        Dados do Doador Atualizados!
                     </div>
                 </div>
             </div>
@@ -207,15 +208,15 @@
             <div class="row my-3" v-if="behavioral.sending">
                 <div class="col text-center">
                     <div class="alert alert-warning" role="alert">
-                        Inserindo novo Doador...
+                        Atualizando Dados...
                     </div>
                 </div>
             </div>
 
             <div class="row my-3" v-if="!behavioral.sending">
                 <div class="col text-center">
-                    <button type="submit" class="btn btn-success btn-lg">Salvar</button>
-                    <router-link class="btn btn-danger btn-lg ml-3" :to="{ name: 'home' }">Voltar</router-link>
+                    <button type="submit" class="btn btn-success btn-lg">Atualizar</button>
+                    <router-link class="btn btn-danger btn-lg ml-3" :to="{ name: 'list' }">Voltar</router-link>
                 </div>
 
             </div>
@@ -238,23 +239,24 @@ export default {
                 currency: currencyMask
             },
             user: {
-                name: 'Adriano Alves',
-                email: 'email@email.com',
-                cpf: '29549217817',
-                dob: '21/12/1980', // date of birth( data de nascimento )
-                phone: '11971783716',
-                phone_secondary: '11971783717',
+                id: null,
+                name: '',
+                email: '',
+                cpf: '',
+                dob: '', // date of birth( data de nascimento )
+                phone: '',
+                phone_secondary: '',
                 address: {
-                    cep: '04905000', number: '100', complement: 'casa'
+                    cep: '', number: '', complement: ''
                 }
             },
             donation: {
                 frequency: 1,
-                amount: '100,00',
+                amount: '',
                 payment: {
                     type: 1,
-                    name_on_card: 'adriano a silva',
-                    card_number: '1234567812345678',
+                    name_on_card: '',
+                    card_number: '',
                     expire_at_month: 12,
                     expire_at_year: 25
                 }
@@ -306,11 +308,16 @@ export default {
         }
     },
 
+    mounted() {
+        this.user.id = this.$route.params.id;
+        this.getData();
+    },
+
     methods: {
         /**
-         * Save a new donator with its donation and payment data
+         * update the donator data
          */
-        post() {
+        update() {
             this.$v.$touch();
             if( this.$v.$invalid ){
                 this.behavioral.error = true;
@@ -318,23 +325,62 @@ export default {
             else{
                 this.behavioral.sending = true;
                 this.behavioral.error = false;
-                axios.post( '/api/donators', { donator: this.user, donation: this.donation } ).then( res => {
-                    console.log( res.data );
-                    if( res.status === 200 )
+                axios.put( `/api/donators/${this.user.id}`, { donator: this.user, donation: this.donation } ).then( res => {
+                    if( res.status === 200 ) {
                         this.behavioral.success = true;
-
+                        this.behavioral.error   = false;
+                    }
                     this.behavioral.sending = false
                 })
                 .catch( error => {
                     this.behavioral.error   = true;
-                    this.behavioral.success, this.behavioral.sending = false;
+                    this.behavioral.success = false;
+                    this.behavioral.sending = false;
                 });
             }
+        },
+        /**
+         * it could be retrieved using just one request, but for the separation of concerns and api examplification
+         * i used a Promise.all to resolve
+         */
+        getData() {
+
+            Promise.all([
+                axios.get( `/api/donators/${this.user.id}` ),
+                axios.get( `/api/user-data/get-by-user-id/${this.user.id}` ),
+                axios.get( `/api/donation/get-by-user-id/${this.user.id}` )
+            ])
+            .then( res => {
+                this.user = {
+                    id: this.user.id,
+                    name: res[0].data.data.name,
+                    email: res[0].data.data.email,
+                    cpf: res[0].data.data.cpf,
+                    dob: res[0].data.data.dob,
+                    phone: res[1].data.store.phone,
+                    phone_secondary: res[1].data.store.phone_secondary,
+                    address: res[1].data.store.address
+                };
+
+                this.donation = {
+                    frequency: res[2].data.frequency,
+                    amount: res[2].data.amount.replace('.', ',') ,
+                    payment: null
+                };
+                axios.get( `/api/payment-method/${res[1].data.store.payment_type}/get-by-user-id/${this.user.id}` ).then( response => {
+                    this.donation.payment = {
+                        type: res[1].data.store.payment_type,
+                        name_on_card: response.data.name_on_card,
+                        card_number: response.data.card_number,
+                        expire_at_month: response.data.expire_at_month,
+                        expire_at_year: response.data.expire_at_year
+                    }
+                });
+            })
+            .catch( error => {
+                // @todo implement error handling and notification/persistence layer
+            });
         }
     }
 }
 </script>
-
-<style scoped>
-
-</style>
